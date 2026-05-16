@@ -43,6 +43,7 @@ def create_multimodal_masked_dataloader(
     shuffle: bool = True,
     drop_last: bool = False,
     distributed: bool = False,
+    modality_paths: Optional[dict[str, str]] = None
 ):
     """
     Creates a dataloader for a multimodal masked dataset.
@@ -90,6 +91,7 @@ def create_multimodal_masked_dataloader(
         sample_from_k_augmentations=sample_from_k_augmentations,
         text_tokenizer_path=text_tokenizer_path,
         text_max_length=text_max_length,
+        modality_paths=modality_paths,
     )
 
     sampler = DistributedSampler(dataset, shuffle=shuffle) if distributed else None

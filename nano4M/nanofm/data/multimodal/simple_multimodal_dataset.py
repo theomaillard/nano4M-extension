@@ -35,6 +35,7 @@ class SimpleMultimodalDataset(Dataset):
             sample_from_k_augmentations: int = 10,
             text_tokenizer_path: str = 'gpt2',
             text_max_length: int = 256,
+            modality_paths: Optional[dict[str, str]] = None
         ):
         """
         Simple multimodal dataset.
@@ -59,6 +60,7 @@ class SimpleMultimodalDataset(Dataset):
         self.modalities = modalities
         self.transforms = transforms
         self.sample_from_k_augmentations = sample_from_k_augmentations
+        self.modality_paths = modality_paths or {}
         
         self.file_names = self._get_file_names()
         self.modality_extensions = self._get_modality_extensions()
@@ -66,6 +68,7 @@ class SimpleMultimodalDataset(Dataset):
         self.text_tokenizer_path = text_tokenizer_path
         self.text_max_length = text_max_length
         self.text_tokenizer = self._get_text_tokenizer()
+
         
     def __len__(self):
         return len(self.file_names)
@@ -82,7 +85,8 @@ class SimpleMultimodalDataset(Dataset):
         # Get file extension for all modalities
         extensions = {}
         for modality in self.modalities:
-            modality_dir = Path(os.path.join(self.root_dir, self.split, modality))
+            mod_root = self.modality_paths.get(modality, os.path.join(self.root_dir, self.split))
+            modality_dir = Path(os.path.join(mod_root, modality))
             first_file = next(modality_dir.glob('*'))
             extensions[modality] = first_file.suffix
         return extensions
@@ -109,7 +113,8 @@ class SimpleMultimodalDataset(Dataset):
         
         for modality in self.modalities:
             ext = self.modality_extensions[modality]
-            file_path = os.path.join(self.root_dir, self.split, modality, f"{file_name}{ext}")
+            mod_root = self.modality_paths.get(modality, os.path.join(self.root_dir, self.split))
+            file_path = os.path.join(mod_root, modality, f"{file_name}{ext}")
 
             if 'tok' in modality:
                 tokens = np.load(file_path)[augmentation_idx]

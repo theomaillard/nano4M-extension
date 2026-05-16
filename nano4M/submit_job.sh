@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=nanofm         # Change as needed
-#SBATCH --time=06:00:00
+#SBATCH --job-name=extnanofm         # Change as needed
+#SBATCH --time=07:00:00
 #SBATCH --account=com-304
 #SBATCH --qos=com-304
 #SBATCH --gres=gpu:2                    # Request 2 GPUs
 #SBATCH --mem=16G
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4               # Adjust CPU allocation if needed
+#SBATCH --cpus-per-task=6               # Adjust CPU allocation if needed
 #SBATCH --output=interactive_job.out    # Output log file
 #SBATCH --error=interactive_job.err     # Error log file
 #SBATCH --partition=l40s
