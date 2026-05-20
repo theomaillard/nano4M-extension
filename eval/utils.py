@@ -82,7 +82,7 @@ def compute_fid(
 
     fid = FrechetInceptionDistance(
         feature=2048,
-        normalize=False,
+        normalize=True,
     ).to(device)
 
     fid.reset()
