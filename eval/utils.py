@@ -99,7 +99,8 @@ def compute_fid(
                 break
                 
             imgs = imgs[:remaining].contiguous()
-            
+
+        imgs = imgs.float() / 255.0
         imgs = imgs.to(device)
         fid.update(imgs, real=True)
 
@@ -118,11 +119,14 @@ def compute_fid(
                 break
                 
             imgs = imgs[:remaining].contiguous()
-            
+
+        imgs = imgs.float() / 255.0
         imgs = imgs.to(device)
         fid.update(imgs, real=False)
 
         num_fake += imgs.size(0)
+
+    assert num_real == num_fake, f"Mismatch: {num_real} real vs {num_fake} fake"
 
     score = fid.compute()
 
