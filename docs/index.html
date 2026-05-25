@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Your paper description here.">
+  <meta name="keywords" content="keyword1, keyword2, keyword3">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Paper Title Here</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;700&family=Castoro:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Academicons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <!-- Lightbox2 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['$$', '$$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+
+  <style>
+    /* ── Base ── */
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      color: #363636;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-authors a {
+      color: hsl(204, 86%, 53%);
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Hero / teaser ── */
+    .hero-teaser img {
+      border-radius: 8px;
+    }
+
+    /* ── Publication links ── */
+    .publication-links .button {
+      margin: 4px;
+    }
+
+    /* ── Overview tiles ── */
+    .tile.is-child.box {
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+
+    .tile.is-child.box:hover {
+      background: hsl(204, 86%, 53%);
+      color: #fff;
+    }
+
+    .tile.is-child.box:hover .subtitle {
+      color: #fff;
+    }
+
+    /* ── Section spacing ── */
+    .section {
+      padding: 3rem 1.5rem;
+    }
+
+    /* ── Carousel ── */
+    #results-carousel .item {
+      padding: 0.5rem;
+    }
+
+    #results-carousel img {
+      border-radius: 6px;
+      width: 100%;
+      object-fit: cover;
+      max-height: 420px;
+    }
+
+    .caption {
+      margin-top: 0.5rem;
+    }
+
+    /* Bulma-carousel overrides */
+    .carousel-container {
+      overflow: hidden;
+    }
+
+    .carousel-item {
+      opacity: 1 !important;
+    }
+
+    /* ── Tables ── */
+    .table th, .table td {
+      vertical-align: middle;
+      font-size: 0.9rem;
+    }
+
+    /* ── Figures / boxes ── */
+    .box img {
+      border-radius: 4px;
+      width: 100%;
+    }
+
+    /* ── Footer ── */
+    footer.footer {
+      background: #fafafa;
+      border-top: 1px solid #ededed;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    footer.footer a {
+      color: hsl(204, 86%, 53%);
+    }
+
+    /* ── dnerf ── */
+    .dnerf {
+      font-variant: small-caps;
+    }
+
+    /* ── Abstract / content ── */
+    .content p {
+      line-height: 1.8;
+    }
+
+    /* ── Smooth scroll ── */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ── Back-to-top ── */
+    #back-to-top {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: hsl(204, 86%, 53%);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 9999;
+    }
+
+    #back-to-top.visible {
+      display: flex;
+    }
+  </style>
+</head>
+
+<body>
+
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <h1 class="title is-1 publication-title">
+            Title Here
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="#">Author One</a>,&nbsp;</span>
+            <span class="author-block"><a href="#">Author Two</a>,&nbsp;</span>
+            <span class="author-block"><a href="#">Author Three</a></span>
+          </div>
+
+          <div class="is-size-5 publication-authors" style="margin-top:0.4rem;">
+            <span class="author-block">Swiss Federal Institute of Technology Lausanne (EPFL)</span>
+          </div>
+
+          <!-- Publication links -->
+          <div class="column has-text-centered" style="margin-top:1rem;">
+            <div class="publication-links">
+
+              <!-- PDF -->
+              <!-- <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+
+              <!-- arXiv -->
+              <!-- <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+
+              <!-- Code -->
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TEASER IMAGE ═══════════════════════════ -->
+<section class="hero hero-teaser">
+  <div class="container is-max-desktop">
+    <div class="box">
+      <!-- Replace src with your teaser image -->
+      <img src="https://via.placeholder.com/1200x400?text=Teaser+Image" alt="Teaser image">
+    </div>
+    <br>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ ABSTRACT + OVERVIEW ═══════════════════════════ -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+
+    <!-- Abstract -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Replace this with your abstract. Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi
+            nisl aliquam enim, nec volutpat nisl nisi vel enim.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overview tiles -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Overview</h2>
+        <div class="tile is-ancestor is-centered">
+          <div class="tile is-parent">
+            <a href="#intro" class="tile is-child box">
+              <p class="subtitle"><font size="-1">Introduction</font></p>
+            </a>
+          </div>
+          <div class="tile is-parent">
+            <a href="#related-work" class="tile is-child box">
+              <p class="subtitle"><font size="-1">Related Works</font></p>
+            </a>
+          </div>
+          <div class="tile is-parent">
+            <a href="#method" class="tile is-child box">
+              <p class="subtitle"><font size="-1">Methodology</font></p>
+            </a>
+          </div>
+          <div class="tile is-parent">
+            <a href="#exp" class="tile is-child box">
+              <p class="subtitle"><font size="-1">Experiments</font></p>
+            </a>
+          </div>
+          <div class="tile is-parent">
+            <a href="#conclusion" class="tile is-child box">
+              <p class="subtitle"><font size="-1">Conclusion</font></p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════ INTRODUCTION ═══════════════════════════ -->
+<section class="section" id="intro">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">I. Introduction</h2>
+        <div class="content has-text-justified">
+          <p>
+            Write your introduction here. Explain the problem, motivation, and
+            contributions of your work.
+          </p>
+          <p>
+            You can have multiple paragraphs. Reference equations inline like
+            \( f(x) = x^2 \) or displayed:
+            $$
+              \mathcal{L} = \sum_{i=1}^{N} \ell(y_i, \hat{y}_i)
+            $$
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ RELATED WORK ═══════════════════════════ -->
+<section class="section" id="related-work">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">II. Related Works</h2>
+        <div class="content has-text-justified">
+          <p>Discuss related work here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Two-column related work cards -->
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-6">Paper Title One <a href="#">[1]</a></h2>
+          <p>Brief description of this related paper and how it relates to your work.</p>
+          <div class="box">
+            <img src="https://via.placeholder.com/500x280?text=Figure+from+Paper+1" alt="Related work 1">
+            <h5 class="subtitle has-text-centered"><font size="-1.5">Caption for the figure.</font></h5>
+          </div>
+          <p>Limitations of this prior work that your paper addresses.</p>
+        </div>
+      </div>
+
+      <div class="column">
+        <h2 class="title is-6">Paper Title Two <a href="#">[2]</a></h2>
+        <p>Brief description of this related paper and how it relates to your work.</p>
+        <div class="box">
+          <img src="https://via.placeholder.com/500x280?text=Figure+from+Paper+2" alt="Related work 2">
+          <h5 class="subtitle has-text-centered"><font size="-1.5">Caption for the figure.</font></h5>
+        </div>
+        <p>Limitations of this prior work that your paper addresses.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ METHODOLOGY ═══════════════════════════ -->
+<section class="section" id="method">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">III. Methodology</h2>
+        <div class="content has-text-justified">
+          <p>Describe your methodology here.</p>
+        </div>
+
+        <!-- Sub-section A -->
+        <h3 class="title is-4">III-A. Environment / Setup</h3>
+        <div class="content has-text-justified">
+          <p>Describe your environment or experimental setup here.</p>
+        </div>
+
+        <!-- Image carousel placeholder -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CAROUSEL (light band) ═══════════════════════════ -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Simple flex carousel — swap in bulma-carousel JS if needed -->
+      <div style="display:flex; gap:1rem; overflow-x:auto; padding-bottom:0.5rem;">
+
+        <div style="min-width:280px; flex:0 0 auto;">
+          <a href="https://via.placeholder.com/600x400?text=Env+1" data-lightbox="envs">
+            <img src="https://via.placeholder.com/600x400?text=Env+1" alt="Environment 1" style="border-radius:6px;">
+          </a>
+          <h2 class="subtitle has-text-centered" style="margin-top:0.3rem;"><font size="-0.7">Environment 1</font></h2>
+        </div>
+
+        <div style="min-width:280px; flex:0 0 auto;">
+          <a href="https://via.placeholder.com/600x400?text=Env+2" data-lightbox="envs">
+            <img src="https://via.placeholder.com/600x400?text=Env+2" alt="Environment 2" style="border-radius:6px;">
+          </a>
+          <h2 class="subtitle has-text-centered" style="margin-top:0.3rem;"><font size="-0.7">Environment 2</font></h2>
+        </div>
+
+        <div style="min-width:280px; flex:0 0 auto;">
+          <a href="https://via.placeholder.com/600x400?text=Env+3" data-lightbox="envs">
+            <img src="https://via.placeholder.com/600x400?text=Env+3" alt="Environment 3" style="border-radius:6px;">
+          </a>
+          <h2 class="subtitle has-text-centered" style="margin-top:0.3rem;"><font size="-0.7">Environment 3</font></h2>
+        </div>
+
+        <div style="min-width:280px; flex:0 0 auto;">
+          <a href="https://via.placeholder.com/600x400?text=Env+4" data-lightbox="envs">
+            <img src="https://via.placeholder.com/600x400?text=Env+4" alt="Environment 4" style="border-radius:6px;">
+          </a>
+          <h2 class="subtitle has-text-centered" style="margin-top:0.3rem;"><font size="-0.7">Environment 4</font></h2>
+        </div>
+
+      </div>
+    </div>
+    <h6 class="subtitle has-text-centered" style="margin-top:0.8rem;">Environments used for training the agents</h6>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ METHOD continued ═══════════════════════════ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+
+        <!-- Sub-section B -->
+        <h3 class="title is-4">III-B. Model / Agents</h3>
+        <div class="content has-text-justified">
+          <p>Describe your model or agents here. You can reference equations:</p>
+          <p>
+            $$
+              G = \sum_{i=1}^{T}\left[\frac{\mathbf{1}(\text{event at } t)}{N} - \frac{1}{T}\right]
+            $$
+          </p>
+        </div>
+
+        <!-- Centered image -->
+        <div class="columns is-centered">
+          <div class="column is-three-fifths">
+            <div class="box" style="text-align:center;">
+              <img src="https://via.placeholder.com/600x350?text=Model+Diagram" alt="Model diagram">
+              <h5 class="subtitle has-text-centered"><font size="-0.7">Caption for the model diagram.</font></h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-section C -->
+        <h3 class="title is-4">III-C. Training</h3>
+        <div class="content has-text-justified">
+          <p>Describe your training procedure here.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ EXPERIMENTS ═══════════════════════════ -->
+<section class="section" id="exp">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">IV. Experiments</h2>
+        <p>Describe your experimental setup and results.</p>
+        <br>
+
+        <!-- IV-A Setup -->
+        <h3 class="title is-4">IV-A. Experimental Setup</h3>
+
+        <h3 class="title is-5">Parameters</h3>
+        <div class="box">
+          <div class="table-container">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Param 1</th>
+                  <th>Param 2</th>
+                  <th>Param 3</th>
+                  <th>Param 4</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Config A</b></td>
+                  <td>30</td>
+                  <td>4</td>
+                  <td>160</td>
+                  <td>15</td>
+                </tr>
+                <tr>
+                  <td><b>Config B</b></td>
+                  <td>30</td>
+                  <td>20</td>
+                  <td>85</td>
+                  <td>15</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="text-align:center; font-size:0.85rem;">Parameters for the different configurations.</div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>Explain the parameters and configurations.</p>
+        </div>
+
+        <!-- IV-B Results -->
+        <h3 class="title is-4">IV-B. Results</h3>
+
+        <h3 class="title is-5">Training results</h3>
+        <div class="box">
+          <img src="https://via.placeholder.com/900x400?text=Training+Plot" alt="Training plot">
+          <h5 class="subtitle has-text-centered"><font size="-0.7">Reward/loss curves during training.</font></h5>
+        </div>
+
+        <h3 class="title is-5">Quantitative results</h3>
+        <div class="box">
+          <div class="table-container">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Metric 1 ↑</th>
+                  <th>Metric 2 ↓</th>
+                  <th>Metric 3 ↑</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Baseline</td>
+                  <td>0.72</td>
+                  <td>0.31</td>
+                  <td>0.65</td>
+                </tr>
+                <tr>
+                  <td><b>Ours</b></td>
+                  <td><b>0.85</b></td>
+                  <td><b>0.18</b></td>
+                  <td><b>0.81</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="text-align:center; font-size:0.85rem;">Comparison of methods across metrics.</div>
+        </div>
+
+        <h3 class="title is-5">Qualitative results</h3>
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="box">
+              <img src="https://via.placeholder.com/800x400?text=Qualitative+Results" alt="Qualitative results">
+              <h5 class="subtitle has-text-centered"><font size="-0.7">Qualitative comparison of results.</font></h5>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CONCLUSION ═══════════════════════════ -->
+<section class="section" id="conclusion">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">V. Conclusion and Limitations</h2>
+        <div class="content has-text-justified">
+          <p>
+            Summarize your findings and contributions here. Discuss limitations and
+            potential directions for future work.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ REFERENCES ═══════════════════════════ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">References</h2>
+        <div class="content">
+          <ol>
+            <li>[1] Author et al. "Paper Title." <em>Conference/Journal</em>, Year.</li>
+            <li>[2] Author et al. "Paper Title." <em>Conference/Journal</em>, Year.</li>
+            <li>[3] Author et al. "Paper Title." <em>Conference/Journal</em>, Year.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <p>
+          This website is based on the
+          <a href="https://nerfies.github.io" target="_blank">Nerfies</a> template,
+          licensed under
+          <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="back-to-top" title="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
+<script>
+  // Back-to-top button
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+</body>
+</html>
