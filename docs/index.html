@@ -37,6 +37,11 @@
       color: #363636;
     }
 
+    .author-block {
+      display: inline-block;
+      font-weight: 600;
+    }
+
     .publication-title {
       font-family: 'Google Sans', sans-serif;
     }
@@ -179,7 +184,7 @@
 <body>
 
 
-<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<!-- ═══════════════════════════ TITLE ═══════════════════════════ -->
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
@@ -187,17 +192,17 @@
         <div class="column has-text-centered">
 
           <h1 class="title is-1 publication-title">
-            Title Here
+            nano4M extension: <br> adding Canny Edges modality
           </h1>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><a href="#">Author One</a>,&nbsp;</span>
-            <span class="author-block"><a href="#">Author Two</a>,&nbsp;</span>
-            <span class="author-block"><a href="#">Author Three</a></span>
+            <span class="author-block">Grégoire Mottier</a>,&nbsp;</span>
+            <span class="author-block">Théo Maillard</a>,&nbsp;</span>
+            <span class="author-block">Louis Deriaz</a></span>
           </div>
 
           <div class="is-size-5 publication-authors" style="margin-top:0.4rem;">
-            <span class="author-block">Swiss Federal Institute of Technology Lausanne (EPFL)</span>
+            <span>Swiss Federal Institute of Technology Lausanne (EPFL)</span>
           </div>
 
           <!-- Publication links -->
@@ -222,7 +227,7 @@
 
               <!-- Code -->
               <span class="link-block">
-                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://github.com/theomaillard/nano4M-extension" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fab fa-github"></i></span>
                   <span>Code</span>
                 </a>
@@ -238,15 +243,14 @@
 </section>
 
 <!-- ═══════════════════════════ TEASER IMAGE ═══════════════════════════ -->
-<section class="hero hero-teaser">
+<!-- <section class="hero hero-teaser">
   <div class="container is-max-desktop">
     <div class="box">
-      <!-- Replace src with your teaser image -->
-      <img src="https://via.placeholder.com/1200x400?text=Teaser+Image" alt="Teaser image">
+      <img src="images/title.png" alt="Teaser image">
     </div>
     <br>
   </div>
-</section>
+</section> -->
 
 <!-- ═══════════════════════════ ABSTRACT + OVERVIEW ═══════════════════════════ -->
 <section class="section hero is-light">
@@ -258,9 +262,10 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Replace this with your abstract. Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi
-            nisl aliquam enim, nec volutpat nisl nisi vel enim.
+            The nano4M model supports any-to-any generation across four modalities: RGB, 
+            Depth, Surface normals, and Scene description. We extend it with a fifth modality: 
+            Canny edges, enabling generation from and to edge maps, as well as their use as 
+            an intermediary conditioning step in chained generation pipelines.
           </p>
         </div>
       </div>
@@ -278,12 +283,12 @@
           </div>
           <div class="tile is-parent">
             <a href="#related-work" class="tile is-child box">
-              <p class="subtitle"><font size="-1">Related Works</font></p>
+              <p class="subtitle"><font size="-1">Related Work</font></p>
             </a>
           </div>
           <div class="tile is-parent">
             <a href="#method" class="tile is-child box">
-              <p class="subtitle"><font size="-1">Methodology</font></p>
+              <p class="subtitle"><font size="-1">Method</font></p>
             </a>
           </div>
           <div class="tile is-parent">
@@ -311,16 +316,28 @@
         <h2 class="title is-3">I. Introduction</h2>
         <div class="content has-text-justified">
           <p>
-            Write your introduction here. Explain the problem, motivation, and
-            contributions of your work.
+            The current nano4M model supports any-to-any generation across four modalities: 
+            RGB, Depth, Surface normals, and Scene description. However, direct generation 
+            from Scene description to RGB suffers from notable quality degradation, including 
+            missing objects, incorrect shapes, and inconsistent spatial positioning. We 
+            hypothesize that this stems from the lack of an intermediate structural modality 
+            that grounds spatial and geometric information before generating the RGB image.
           </p>
           <p>
-            You can have multiple paragraphs. Reference equations inline like
-            \( f(x) = x^2 \) or displayed:
-            $$
-              \mathcal{L} = \sum_{i=1}^{N} \ell(y_i, \hat{y}_i)
-            $$
+            To address this, we extend nano4M with a fifth modality: <b>Canny edges</b>. 
+            This modality provides a lightweight, deterministic representation of object 
+            boundaries and spatial layout. Our hypothesis is that introducing this modality 
+            enables higher-quality chained generation (Scene description → Canny edges → RGB), 
+            where the edge map serves as a structural intermediary constraining object shape 
+            and position before texture and color are generated.
           </p>
+          <div class="container is-max-desktop">
+            <div class="box">
+              <img src="images/title.png" alt="Teaser image">
+              <h5 class="subtitle has-text-centered"><font size="-0.7">RGB image (left) and its Canny edges representation (right).</font></h5>
+            </div>
+            <br>
+          </div>
         </div>
       </div>
     </div>
@@ -332,10 +349,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">II. Related Works</h2>
-        <div class="content has-text-justified">
-          <p>Discuss related work here.</p>
-        </div>
+        <h2 class="title is-3">II. Related Work</h2>
       </div>
     </div>
   </div>
@@ -348,130 +362,114 @@
 
       <div class="column">
         <div class="content">
-          <h2 class="title is-6">Paper Title One <a href="#">[1]</a></h2>
-          <p>Brief description of this related paper and how it relates to your work.</p>
-          <div class="box">
-            <img src="https://via.placeholder.com/500x280?text=Figure+from+Paper+1" alt="Related work 1">
-            <h5 class="subtitle has-text-centered"><font size="-1.5">Caption for the figure.</font></h5>
-          </div>
-          <p>Limitations of this prior work that your paper addresses.</p>
+          <h2 class="title is-6">4M: Massively Multimodal Masked Modeling <a href="https://arxiv.org/abs/2312.06647">[1]</a></h2>
+          <p> 
+            The 4M framework shows that training a single transformer on diverse tokenized 
+            modalities enables any-to-any generation. Our nano4M model is a lightweight 
+            reproduction of this framework, which we extend by adding Canny edges as a 
+            fifth modality without architectural changes.
+          </p>
         </div>
       </div>
 
       <div class="column">
-        <h2 class="title is-6">Paper Title Two <a href="#">[2]</a></h2>
-        <p>Brief description of this related paper and how it relates to your work.</p>
-        <div class="box">
-          <img src="https://via.placeholder.com/500x280?text=Figure+from+Paper+2" alt="Related work 2">
-          <h5 class="subtitle has-text-centered"><font size="-1.5">Caption for the figure.</font></h5>
+        <div class="content">
+        <h2 class="title is-6">Segment Anything (SAM) + Edge Detection <a href="https://arxiv.org/abs/2304.02643">[3]</a></h2>
+        <p>
+          SAM is a promptable segmentation foundation model whose masks can be used to 
+          guide edge detection. SCESAME builds on SAM's automatic mask generation for 
+          zero-shot edge detection, showing that SAM-derived masks yield cleaner edges 
+          than direct RGB-based detection — a pipeline we adopt for our data generation.
+        </p>
         </div>
-        <p>Limitations of this prior work that your paper addresses.</p>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════ METHODOLOGY ═══════════════════════════ -->
+<!-- ═══════════════════════════ METHOD ═══════════════════════════ -->
 <section class="section" id="method">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">III. Methodology</h2>
-        <div class="content has-text-justified">
-          <p>Describe your methodology here.</p>
-        </div>
-
+        <h2 class="title is-3">III. Method</h2>
+      
         <!-- Sub-section A -->
-        <h3 class="title is-4">III-A. Environment / Setup</h3>
-        <div class="content has-text-justified">
-          <p>Describe your environment or experimental setup here.</p>
+        <h3 class="title is-4">III-A. Canny edges generation</h3>
+          <div class="content has-text-justified">
+            <p>
+              We generated the Canny edge modality from the RGB CLEVR dataset using the OpenCV 
+              <code>Canny()</code> function. Applying it directly on RGB images yielded noisy 
+              or under-detected results. We therefore first applied SAM to produce object masks, 
+              then ran the Canny detector on these masks, yielding sharper and cleaner boundaries.
+            </p>
         </div>
-
-        <!-- Image carousel placeholder -->
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════ CAROUSEL (light band) ═══════════════════════════ -->
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Simple flex carousel — swap in bulma-carousel JS if needed -->
-      <div style="display:flex; gap:1rem; overflow-x:auto; padding-bottom:0.5rem;">
-
-        <div style="min-width:280px; flex:0 0 auto;">
-          <a href="https://via.placeholder.com/600x400?text=Env+1" data-lightbox="envs">
-            <img src="https://via.placeholder.com/600x400?text=Env+1" alt="Environment 1" style="border-radius:6px;">
-          </a>
-          <h2 class="subtitle has-text-centered" style="margin-top:0.3rem;"><font size="-0.7">Environment 1</font></h2>
-        </div>
-
-        <div style="min-width:280px; flex:0 0 auto;">
-          <a href="https://via.placeholder.com/600x400?text=Env+2" data-lightbox="envs">
-            <img src="https://via.placeholder.com/600x400?text=Env+2" alt="Environment 2" style="border-radius:6px;">
-          </a>
-          <h2 class="subtitle has-text-centered" style="margin-top:0.3rem;"><font size="-0.7">Environment 2</font></h2>
-        </div>
-
-        <div style="min-width:280px; flex:0 0 auto;">
-          <a href="https://via.placeholder.com/600x400?text=Env+3" data-lightbox="envs">
-            <img src="https://via.placeholder.com/600x400?text=Env+3" alt="Environment 3" style="border-radius:6px;">
-          </a>
-          <h2 class="subtitle has-text-centered" style="margin-top:0.3rem;"><font size="-0.7">Environment 3</font></h2>
-        </div>
-
-        <div style="min-width:280px; flex:0 0 auto;">
-          <a href="https://via.placeholder.com/600x400?text=Env+4" data-lightbox="envs">
-            <img src="https://via.placeholder.com/600x400?text=Env+4" alt="Environment 4" style="border-radius:6px;">
-          </a>
-          <h2 class="subtitle has-text-centered" style="margin-top:0.3rem;"><font size="-0.7">Environment 4</font></h2>
-        </div>
-
-      </div>
-    </div>
-    <h6 class="subtitle has-text-centered" style="margin-top:0.8rem;">Environments used for training the agents</h6>
-  </div>
-</section>
-
-<!-- ═══════════════════════════ METHOD continued ═══════════════════════════ -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full-width">
 
         <!-- Sub-section B -->
-        <h3 class="title is-4">III-B. Model / Agents</h3>
-        <div class="content has-text-justified">
-          <p>Describe your model or agents here. You can reference equations:</p>
-          <p>
-            $$
-              G = \sum_{i=1}^{T}\left[\frac{\mathbf{1}(\text{event at } t)}{N} - \frac{1}{T}\right]
-            $$
-          </p>
-        </div>
-
-        <!-- Centered image -->
-        <div class="columns is-centered">
-          <div class="column is-three-fifths">
-            <div class="box" style="text-align:center;">
-              <img src="https://via.placeholder.com/600x350?text=Model+Diagram" alt="Model diagram">
-              <h5 class="subtitle has-text-centered"><font size="-0.7">Caption for the model diagram.</font></h5>
-            </div>
-          </div>
+        <h3 class="title is-4">III-B. Dataset tokenization</h3>
+          <div class="content has-text-justified">
+            <p>
+              We tokenized all splits using the pretrained 4M DiVAE tokenizer (codebook size 8k, 
+              196–1024 tokens/image). The Cosmos tokenizer used for other modalities was 
+              unsuitable as it was designed for RGB images and yielded poor reconstructions of 
+              binary edge maps.
+            </p>
         </div>
 
         <!-- Sub-section C -->
-        <h3 class="title is-4">III-C. Training</h3>
-        <div class="content has-text-justified">
-          <p>Describe your training procedure here.</p>
+        <h3 class="title is-4">III-C. Model Training</h3>
+          <div class="content has-text-justified">
+            <p>
+            Training required no architectural changes. The only code modification was adapting 
+            <code>SimpleMultimodalDataset</code> to load Canny tokens from a separate path via 
+            a new <code>modality_paths</code> argument. Training ran for 5h 35m on 2 NVIDIA 
+            L40S GPUs, versus 4h 45m for the four-modality baseline.
+          </p>
         </div>
+        <div class="box">
+          <img src="https://via.placeholder.com/900x400?text=Training+Plot" alt="Training plot">
+          <h5 class="subtitle has-text-centered"><font size="-0.7">Reward/loss curves during training.</font></h5>
+        </div>
+
+        <!-- Sub-section D -->
+        <h3 class="title is-4">III-D. Evaluation Setup</h3>
+          <div class="content has-text-justified">
+            <p>
+              After training, we performed a hyperparameter search specifically for the 
+              Canny → RGB generation task. We generated 900 RGB images by varying four 
+              decoding hyperparameters (top-p, top-k, temperature, number of steps) and 
+              selected the best configuration through visual inspection. The best 
+              configuration found was: steps = 8, temperature = 0.1, top-p = 0.0, top-k = 2.
+            </p>
+            <p>
+              Using these fixed hyperparameters, we generated 5,000 RGB images conditioned 
+              on Canny edge tokens from the test set and evaluated quality using FID, which 
+              measures distributional similarity between generated and real images via 
+              deep features extracted by an Inception-v3 network. For comparisons with other 
+              modalities, we used: steps = 8, temperature = 0.01, top-p = 0.2, top-k = 0, 
+              applied to both direct modality → RGB and chained modality → Canny → RGB 
+              pipelines.
+            </p>
+        </div>
+
 
       </div>
     </div>
   </div>
 </section>
+
+
+<!-- Centered image -->
+<!-- <div class="columns is-centered">
+  <div class="column is-three-fifths">
+    <div class="box" style="text-align:center;">
+      <img src="https://via.placeholder.com/600x350?text=Model+Diagram" alt="Model diagram">
+      <h5 class="subtitle has-text-centered"><font size="-0.7">Caption for the model diagram.</font></h5>
+    </div>
+  </div>
+</div> -->
+
 
 <!-- ═══════════════════════════ EXPERIMENTS ═══════════════════════════ -->
 <section class="section" id="exp">
@@ -482,55 +480,36 @@
         <p>Describe your experimental setup and results.</p>
         <br>
 
-        <!-- IV-A Setup -->
-        <h3 class="title is-4">IV-A. Experimental Setup</h3>
-
         <h3 class="title is-5">Parameters</h3>
         <div class="box">
           <div class="table-container">
             <table class="table is-bordered is-striped is-hoverable is-fullwidth">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Param 1</th>
-                  <th>Param 2</th>
-                  <th>Param 3</th>
-                  <th>Param 4</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><b>Config A</b></td>
-                  <td>30</td>
-                  <td>4</td>
-                  <td>160</td>
-                  <td>15</td>
-                </tr>
-                <tr>
-                  <td><b>Config B</b></td>
-                  <td>30</td>
-                  <td>20</td>
-                  <td>85</td>
-                  <td>15</td>
-                </tr>
-              </tbody>
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th>Steps</th>
+                    <th>Temperature</th>
+                    <th>Top-p</th>
+                    <th>Top-k</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><b>Canny → RGB</b></td>
+                    <td>8</td><td>0.1</td><td>0.0</td><td>2</td>
+                  </tr>
+                  <tr>
+                    <td><b>Other modalities</b></td>
+                    <td>8</td><td>0.01</td><td>0.2</td><td>0</td>
+                  </tr>
+                </tbody>
             </table>
           </div>
-          <div style="text-align:center; font-size:0.85rem;">Parameters for the different configurations.</div>
+          <div style="text-align:center; font-size:0.85rem;">text</div>
         </div>
 
-        <div class="content has-text-justified">
-          <p>Explain the parameters and configurations.</p>
-        </div>
 
-        <!-- IV-B Results -->
-        <h3 class="title is-4">IV-B. Results</h3>
-
-        <h3 class="title is-5">Training results</h3>
-        <div class="box">
-          <img src="https://via.placeholder.com/900x400?text=Training+Plot" alt="Training plot">
-          <h5 class="subtitle has-text-centered"><font size="-0.7">Reward/loss curves during training.</font></h5>
-        </div>
+      
 
         <h3 class="title is-5">Quantitative results</h3>
         <div class="box">
@@ -563,15 +542,6 @@
           <div style="text-align:center; font-size:0.85rem;">Comparison of methods across metrics.</div>
         </div>
 
-        <h3 class="title is-5">Qualitative results</h3>
-        <div class="columns is-centered">
-          <div class="column is-four-fifths">
-            <div class="box">
-              <img src="https://via.placeholder.com/800x400?text=Qualitative+Results" alt="Qualitative results">
-              <h5 class="subtitle has-text-centered"><font size="-0.7">Qualitative comparison of results.</font></h5>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>
@@ -583,7 +553,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">V. Conclusion and Limitations</h2>
+        <h2 class="title is-3">V. Conclusion</h2>
         <div class="content has-text-justified">
           <p>
             Summarize your findings and contributions here. Discuss limitations and
@@ -603,9 +573,14 @@
         <h2 class="title is-3">References</h2>
         <div class="content">
           <ol>
-            <li>[1] Author et al. "Paper Title." <em>Conference/Journal</em>, Year.</li>
-            <li>[2] Author et al. "Paper Title." <em>Conference/Journal</em>, Year.</li>
-            <li>[3] Author et al. "Paper Title." <em>Conference/Journal</em>, Year.</li>
+            <li>Mizrahi et al. "4M: Massively Multimodal Masked Modeling." arXiv:2312.06647, 2023.</li>
+            <li>Kirillov et al. "Segment Anything." arXiv:2304.02643, 2023.</li>
+            <li>Yamagiwa et al. "Zero-Shot Edge Detection with SCESAME." WACV Workshop, 2023.</li>
+            <li>Heusel et al. "GANs Trained by a Two Time-Scale Update Rule." arXiv:1706.08500, 2018.</li>
+            <li>Canny, J. "A Computational Approach to Edge Detection." IEEE TPAMI, 1987.</li>
+            <li>Johnson et al. "CLEVR." arXiv:1612.06890, 2016.</li>
+            <li>NVIDIA et al. "Cosmos World Foundation Model." arXiv:2501.03575, 2025.</li>
+            <li>OpenCV. "Image Processing Module Documentation." 2026.</li>
           </ol>
         </div>
       </div>
