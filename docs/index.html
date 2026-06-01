@@ -524,6 +524,7 @@
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">IV. Experiments</h2>
+        <h3 class="title is-4">IV-A. FID testing</h3>
         <p>
           We generated 5,000 RGB images per conditioning modality and measured FID against the CLEVR test set. 
           Depth and normal give the best results (FID 35.15 and 34.26). Canny edges are surprisingly competitive (50.59), 
@@ -533,12 +534,6 @@
           Adding Canny as an intermediate step (modality → Canny → RGB) does not help: it slightly hurts quality 
           for depth and normal, and only marginally improves scene description (~2 FID points). 
           Canny edges don't seem to add information that depth and normal don't already provide.
-        </p>
-        <p>
-          We also tested spatial coherence by feeding synthetic Canny inputs (shapes moving and scaling across the canvas) 
-          to the model. Generations follow the motion correctly, but the model consistently interprets both squares and circles 
-          as cylinders, and produces empty backgrounds when objects are placed near the image borders - 
-          likely a result of the CLEVR dataset always placing objects in the center.
         </p>
         <br>
 
@@ -603,6 +598,42 @@
           </div>
           <div style="text-align:center; font-size:0.85rem;">Comparison of methods across metrics.</div>
         </div>
+
+
+        <h3 class="title is-4">IV-B. Spatial Coherence Analysis</h3>
+
+    <p>
+      Along the quantitative testing that was carried out using the FID metric, we also tested the spatial coherence of our model by feeding synthetic Canny inputs 
+      (shapes moving and scaling across the canvas) to the model to generate RGB images. In general the results are satisfying and the model behaves as expected. The RGB images
+      contain objects similar to the ones from the CLEVR dataset, of coherent sizes and at the right position. 
+    </p>
+
+    <div class="columns is-centered" style="margin:1rem 0;">
+      <div class="column is-half" style="text-align:center;">
+        <img src="images/comparison_latest.gif" alt="Spatial coherence 1">
+        <p class="subtitle is-6">Spatial Coherence Analysis: comparison of canny edges inputs and resulting RGB images</p>
+      </div>
+    </div>
+
+    <p>
+      However, this visualisation also allowed us to spot two limitations
+      of our model. The first is that when the canny edges used as input are located too low or too high on the canvas, the resulting image is usually empty. This behavior is most likely
+      caused by the dataset used to train our model. Indeed all the images from the CLEVR dataset depicts objects at various positions but the top part of the background is always white and the 
+      bottom grey. Therefore our model is conditioned to output similar results in these zones. 
+    </p>
+    <br>
+    <p>
+      Moreover, the resulting shape is not always coherent. When using a square or circle shape as the canny
+      edges input we often see a cylinder shape in the generated image. This could be a result of using SAM masking in our tokenization pipeline. While this step helped us to get rid of most of the noise,
+      it also got rid of some important segments that are edges in 3D but not on the 2D images which results in a loss of conditional information for the model to determine the geometric shape.
+    </p>
+
+    <div class="columns is-centered" style="margin:1rem 0;">
+      <div class="column is-half" style="text-align:center;">
+        <img src="images/comparison.gif" alt="Spatial coherence 2">
+        <p class="subtitle is-6">As stated above, placing the canny edges too low or too high on the canvas often result in an empty RGB generation. </p>
+      </div>
+    </div>
 
 
       </div>
