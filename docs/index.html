@@ -229,7 +229,7 @@
               <span class="link-block">
                 <a href="https://github.com/theomaillard/nano4M-extension" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Github</span>
+                  <span>GitHub</span>
                 </a>
               </span>
 
@@ -324,7 +324,7 @@
             that grounds spatial and geometric information before generating the RGB image.
           </p>
           <p>
-            To address this, we extend nano4M with a fifth modality: <b>Canny edges</b>. 
+            To address this, we extend nano4M with a fifth modality: <b>Canny edges</b> <a href="https://ieeexplore.ieee.org/document/4767851">[1]</a>. 
             This modality provides a lightweight, deterministic representation of object 
             boundaries and spatial layout. Our hypothesis is that introducing this modality 
             enables higher-quality chained generation (Scene description → Canny edges → RGB), 
@@ -373,7 +373,7 @@
 
       <div class="column">
         <div class="content">
-          <h2 class="title is-6">4M: Massively Multimodal Masked Modeling <a href="https://arxiv.org/abs/2312.06647">[1]</a></h2>
+          <h2 class="title is-6">4M: Massively Multimodal Masked Modeling <a href="https://arxiv.org/abs/2312.06647">[2]</a></h2>
           <p> 
             The 4M framework shows that training a single transformer on diverse tokenized 
             modalities enables any-to-any generation. Our nano4M model is a lightweight 
@@ -385,7 +385,7 @@
 
       <div class="column">
         <div class="content">
-          <h2 class="title is-6">Segment Anything (SAM) <a href="https://arxiv.org/abs/2304.02643">[2]</a></h2>
+          <h2 class="title is-6">Segment Anything (SAM) <a href="https://arxiv.org/abs/2304.02643">[3]</a></h2>
           <p>
             SAM is a large-scale promptable segmentation foundation model trained on over 
             1 billion masks, designed to transfer zero-shot to new tasks including edge 
@@ -411,8 +411,8 @@
         <h3 class="title is-4">III-A. Canny edges generation</h3>
           <div class="content has-text-justified">
             <p>
-              We generated the Canny edge modality from the RGB CLEVR dataset using the OpenCV 
-              <code>Canny()</code> function. Applying it directly on RGB images yielded noisy 
+              We generated the Canny edge modality from the RGB CLEVR <a href="https://arxiv.org/abs/1612.06890">[4]</a> dataset using the OpenCV 
+              <code>Canny()</code> function <a href="https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga04723e007ed888ddf11d9ba04e2232de">[7]</a>. Applying it directly on RGB images yielded noisy 
               or under-detected results. We therefore first applied SAM to produce object masks, 
               then ran the Canny detector on these masks, yielding sharper and cleaner boundaries.
             </p>
@@ -442,7 +442,7 @@
           <div class="content has-text-justified">
             <p>
               We tokenized all splits using the pretrained 4M DiVAE tokenizer (codebook size 8k, 
-              196–1024 tokens/image). The Cosmos tokenizer used for other modalities was 
+              196–1024 tokens/image). The Cosmos <a href="https://arxiv.org/abs/2501.03575">[6]</a> tokenizer used for other modalities was 
               unsuitable as it was designed for RGB images and yielded poor reconstructions of 
               binary edge maps.
             </p>
@@ -483,7 +483,7 @@
             </p>
             <p>
               Using these fixed hyperparameters, we generated 5,000 RGB images conditioned 
-              on Canny edge tokens from the test set and evaluated quality using FID, which 
+              on Canny edge tokens from the test set and evaluated quality using FID <a href="https://arxiv.org/abs/1706.08500">[5]</a>, which 
               measures distributional similarity between generated and real images via 
               deep features extracted by an Inception-v3 network. For comparisons with other 
               modalities, we used: steps = 8, temperature = 0.01, top-p = 0.2, top-k = 0, 
@@ -520,11 +520,13 @@
 
 <!-- ═══════════════════════════ EXPERIMENTS ═══════════════════════════ -->
 <section class="section" id="exp">
+  
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">IV. Experiments</h2>
         <h3 class="title is-4">IV-A. FID testing</h3>
+        <div class="content has-text-justified">
         <p>
           We generated 5,000 RGB images per conditioning modality and measured FID against the CLEVR test set. 
           Depth and normal give the best results (FID 35.15 and 34.26). Canny edges are surprisingly competitive (50.59), 
@@ -535,6 +537,7 @@
           for depth and normal, and only marginally improves scene description (~2 FID points). 
           Canny edges don't seem to add information that depth and normal don't already provide.
         </p>
+        </div>
         <br>
 
         <h3 class="title is-5">Parameters</h3>
@@ -601,12 +604,14 @@
 
 
         <h3 class="title is-4">IV-B. Spatial Coherence Analysis</h3>
-
-    <p>
-      Along the quantitative testing that was carried out using the FID metric, we also tested the spatial coherence of our model by feeding synthetic Canny inputs 
-      (shapes moving and scaling across the canvas) to the model to generate RGB images. In general the results are satisfying and the model behaves as expected. The RGB images
-      contain objects similar to the ones from the CLEVR dataset, of coherent sizes and at the right position. 
-    </p>
+    
+        <div class="content has-text-justified">
+          <p>
+            Along the quantitative testing that was carried out using the FID metric, we also tested the spatial coherence of our model by feeding synthetic Canny inputs 
+            (shapes moving and scaling across the canvas) to the model to generate RGB images. In general the results are satisfying and the model behaves as expected. The RGB images
+            contain objects similar to the ones from the CLEVR dataset, of coherent sizes and at the right position. 
+          </p>
+        </div>
 
     <div class="columns is-centered" style="margin:1rem 0;">
       <div class="column is-half" style="text-align:center;">
@@ -615,18 +620,20 @@
       </div>
     </div>
 
-    <p>
-      However, this visualisation also allowed us to spot two limitations
-      of our model. The first is that when the canny edges used as input are located too low or too high on the canvas, the resulting image is usually empty. This behavior is most likely
-      caused by the dataset used to train our model. Indeed all the images from the CLEVR dataset depicts objects at various positions but the top part of the background is always white and the 
-      bottom grey. Therefore our model is conditioned to output similar results in these zones. 
-    </p>
-    <br>
-    <p>
-      Moreover, the resulting shape is not always coherent. When using a square or circle shape as the canny
-      edges input we often see a cylinder shape in the generated image. This could be a result of using SAM masking in our tokenization pipeline. While this step helped us to get rid of most of the noise,
-      it also got rid of some important segments that are edges in 3D but not on the 2D images which results in a loss of conditional information for the model to determine the geometric shape.
-    </p>
+    <div class="content has-text-justified">
+      <p>
+        However, this visualisation also allowed us to spot two limitations
+        of our model. The first is that when the canny edges used as input are located too low or too high on the canvas, the resulting image is usually empty. This behavior is most likely
+        caused by the dataset used to train our model. Indeed all the images from the CLEVR dataset depicts objects at various positions but the top part of the background is always white and the 
+        bottom grey. Therefore our model is conditioned to output similar results in these zones. 
+      </p>
+      <br>
+      <p>
+        Moreover, the resulting shape is not always coherent. When using a square or circle shape as the canny
+        edges input we often see a cylinder shape in the generated image. This could be a result of using SAM masking in our tokenization pipeline. While this step helped us to get rid of most of the noise,
+        it also got rid of some important segments that are edges in 3D but not on the 2D images which results in a loss of conditional information for the model to determine the geometric shape.
+      </p>
+    </div>
 
     <div class="columns is-centered" style="margin:1rem 0;">
       <div class="column is-half" style="text-align:center;">
@@ -649,20 +656,27 @@
         <h2 class="title is-3">V. Conclusion</h2>
         <div class="content has-text-justified">
           <p>
-            We successfully added Canny edges as a fifth modality to nano4M. The model can now generate to and from 
-            edge maps, and use them as an intermediate step between modalities. With a FID of 50.59, Canny edges 
-            are a reasonable conditioning signal - not far behind depth and normals. Generated RGB images also 
-            stay spatially consistent with their edge map inputs.
+            We successfully extended nano4M with a fifth modality: Canny edges. The model 
+            can now generate to and from edge maps, and use them as an intermediate step 
+            in chained generation pipelines. With a FID of 50.59, Canny edges prove to be 
+            a reasonable conditioning signal, not far behind depth and normals. The spatial 
+            coherence analysis also confirmed that generated RGB images follow the structure 
+            of the input edge maps well.
           </p>
           <p>
-            Our main hypothesis did not quite work out: chaining Canny edges between scene description and RGB 
-            only improved FID by ~2 points. Text descriptions don't carry enough spatial information for 
-            edge maps to bridge the gap. We also noticed the model tends to generate cylinders regardless of the 
-            input shape, and produces empty backgrounds when objects are near the image borders - 
-            probably because CLEVR always places objects in the center.
+            That said, our initial hypothesis did not fully hold. Chaining Canny edges 
+            between Scene description and RGB only brought a marginal improvement of about 
+            2 FID points, suggesting that edge maps alone are not sufficient to compensate 
+            for the lack of geometric detail in text descriptions. 
+            We also noticed that the model tends to generate cylinders regardless of the 
+            input shape, and produces empty backgrounds when objects are placed near the 
+            image borders, likely because CLEVR training images consistently place objects 
+            in the center.
           </p>
           <p>
-            Future work could look at more diverse training data, or richer intermediate modalities like segmentation maps.
+            Future work could explore training on 
+            more diverse datasets, or richer intermediate modalities such as segmentation 
+            maps that may carry more structural information.          
           </p>
         </div>
       </div>
@@ -678,11 +692,11 @@
         <h2 class="title is-3">References</h2>
         <div class="content">
           <ol>
+            <li>Canny, J. "A Computational Approach to Edge Detection." IEEE TPAMI, 1987.</li>
             <li>Mizrahi et al. "4M: Massively Multimodal Masked Modeling." arXiv:2312.06647, 2023.</li>
             <li>Kirillov et al. "Segment Anything." arXiv:2304.02643, 2023.</li>
-            <li>Heusel et al. "GANs Trained by a Two Time-Scale Update Rule." arXiv:1706.08500, 2018.</li>
-            <li>Canny, J. "A Computational Approach to Edge Detection." IEEE TPAMI, 1987.</li>
             <li>Johnson et al. "CLEVR." arXiv:1612.06890, 2016.</li>
+            <li>Heusel et al. "GANs Trained by a Two Time-Scale Update Rule." arXiv:1706.08500, 2018.</li>
             <li>NVIDIA et al. "Cosmos World Foundation Model." arXiv:2501.03575, 2025.</li>
             <li>OpenCV. "Image Processing Module Documentation." 2026.</li>
           </ol>

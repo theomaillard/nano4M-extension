@@ -30,9 +30,9 @@ python submit_job.sh cfgs\nano4M\multiclevr_d6-6w512.yaml <wandb_api_key> 2
 ## File Hierarchy
 
 ```
-├───dataset/ # notebooks for dataset transformation visualization and sript to transform RGB dataset to Canny edges
+├───dataset/ # notebooks for dataset transformation & visualization and script to transform RGB dataset to Canny edges
 │       
-├───docs/ # website directory
+├───docs/ # website
 │           
 ├───eval/ # notebooks for inference and evaluation
 │       
@@ -67,5 +67,3 @@ python submit_job.sh cfgs\nano4M\multiclevr_d6-6w512.yaml <wandb_api_key> 2
         │       
         └───utils/
 ```
-- Training progress is tracked via [Weights & Biases](https://wandb.ai). Provide your API key when launching a job.
-- Configuration files in `cfgs/nano4M/` are the single source of truth for all experiments — reproducing a run only requires the matching config and checkpoint.
