@@ -492,6 +492,14 @@
             </p>
         </div>
 
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="box" style="text-align:center;">
+              <img src="images/canny_vs_gen2.png" style="width:100%; display:inline-block;">
+              <h5 class="subtitle has-text-centered"><font size="-0.7">Example of RGB image generated from a canny edge map (steps=8, temp=0.1, top_p=0.0, top_k=2). Such generated images were used to compute the FID score.</font></h5>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -516,7 +524,22 @@
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">IV. Experiments</h2>
-        <p>Describe your experimental setup and results.</p>
+        <p>
+          We generated 5,000 RGB images per conditioning modality and measured FID against the CLEVR test set. 
+          Depth and normal give the best results (FID 35.15 and 34.26). Canny edges are surprisingly competitive (50.59), 
+          while scene description struggles (113.33) — text simply lacks the spatial detail needed for accurate generation.
+        </p>
+        <p>
+          Adding Canny as an intermediate step (modality → Canny → RGB) does not help: it slightly hurts quality 
+          for depth and normal, and only marginally improves scene description (~2 FID points). 
+          Canny edges don't seem to add information that depth and normal don't already provide.
+        </p>
+        <p>
+          We also tested spatial coherence by feeding synthetic Canny inputs (shapes moving and scaling across the canvas) 
+          to the model. Generations follow the motion correctly, but the model consistently interprets both squares and circles 
+          as cylinders, and produces empty backgrounds when objects are placed near the image borders — 
+          likely a result of the CLEVR dataset always placing objects in the center.
+        </p>
         <br>
 
         <h3 class="title is-5">Parameters</h3>
