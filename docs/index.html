@@ -5,7 +5,7 @@
   <meta name="description" content="Your paper description here.">
   <meta name="keywords" content="keyword1, keyword2, keyword3">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your Paper Title Here</title>
+  <title>nano4M extension: Canny Edges</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;700&family=Castoro:ital@0;1&display=swap" rel="stylesheet">
@@ -229,7 +229,7 @@
               <span class="link-block">
                 <a href="https://github.com/theomaillard/nano4M-extension" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Code</span>
+                  <span>Github</span>
                 </a>
               </span>
 
@@ -331,13 +331,24 @@
             where the edge map serves as a structural intermediary constraining object shape 
             and position before texture and color are generated.
           </p>
-          <div class="container is-max-desktop">
+          <!-- <div class="container is-max-desktop">
             <div class="box">
               <img src="images/title.png" alt="Teaser image">
               <h5 class="subtitle has-text-centered"><font size="-0.7">RGB image (left) and its Canny edges representation (right).</font></h5>
             </div>
             <br>
+          </div> -->
+          <div class="columns is-centered">
+            <div class="column is-four-fifths">
+              <div class="box" style="text-align:center;">
+                <img src="images/rgb.png" style="width:40%; display:inline-block;">
+                <img src="images/canny.png" style="width:40%; display:inline-block;">
+                <h5 class="subtitle has-text-centered"><font size="-0.7">RGB image and its Canny edge map.</font></h5>
+              </div>
+            </div>
           </div>
+          
+        </div>
         </div>
       </div>
     </div>
@@ -374,13 +385,14 @@
 
       <div class="column">
         <div class="content">
-        <h2 class="title is-6">Segment Anything (SAM) + Edge Detection <a href="https://arxiv.org/abs/2304.02643">[3]</a></h2>
-        <p>
-          SAM is a promptable segmentation foundation model whose masks can be used to 
-          guide edge detection. SCESAME builds on SAM's automatic mask generation for 
-          zero-shot edge detection, showing that SAM-derived masks yield cleaner edges 
-          than direct RGB-based detection — a pipeline we adopt for our data generation.
-        </p>
+          <h2 class="title is-6">Segment Anything (SAM) <a href="https://arxiv.org/abs/2304.02643">[2]</a></h2>
+          <p>
+            SAM is a large-scale promptable segmentation foundation model trained on over 
+            1 billion masks, designed to transfer zero-shot to new tasks including edge 
+            detection. We leverage its automatic mask generation as a preprocessing step 
+            before applying the Canny detector, yielding significantly cleaner edge maps 
+            than direct RGB-based detection.
+          </p>
         </div>
       </div>
 
@@ -405,7 +417,26 @@
               then ran the Canny detector on these masks, yielding sharper and cleaner boundaries.
             </p>
         </div>
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="box" style="text-align:center;">
+              <img src="images/rgb.png" style="width:30%; display:inline-block;">
+              <img src="images/nosam.png" style="width:30%; display:inline-block;">
+              <h5 class="subtitle has-text-centered"><font size="-0.7">Canny edges generation directly on RGB.</font></h5>
+            </div>
+          </div>
+        </div>
 
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="box" style="text-align:center;">
+              <img src="images/rgb.png" style="width:30%; display:inline-block;">
+              <img src="images/sam.png" style="width:30%; display:inline-block;">
+              <img src="images/canny.png" style="width:30%; display:inline-block;">
+              <h5 class="subtitle has-text-centered"><font size="-0.7">Canny edges generation with SAM.</font></h5>
+            </div>
+          </div>
+        </div>
         <!-- Sub-section B -->
         <h3 class="title is-4">III-B. Dataset tokenization</h3>
           <div class="content has-text-justified">
@@ -415,6 +446,15 @@
               unsuitable as it was designed for RGB images and yielded poor reconstructions of 
               binary edge maps.
             </p>
+        </div>
+         <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="box" style="text-align:center;">
+              <img src="images/cosmos1.png" style="width:100%; display:inline-block;"> <br>
+              <img src="images/reconstruction1.png" style="width:100%; display:inline-block;"> 
+            <h5 class="subtitle has-text-centered"><font size="-0.7">Comparison between Cosmos and DiVAE reconstruction.</font></h5>
+            </div>
+          </div>
         </div>
 
         <!-- Sub-section C -->
@@ -428,10 +468,9 @@
           </p>
         </div>
         <div class="box">
-          <img src="https://via.placeholder.com/900x400?text=Training+Plot" alt="Training plot">
-          <h5 class="subtitle has-text-centered"><font size="-0.7">Reward/loss curves during training.</font></h5>
+          <img src="images/curves.png" alt="Training plot">
+          <h5 class="subtitle has-text-centered"><font size="-0.7">Curves during training.</font></h5>
         </div>
-
         <!-- Sub-section D -->
         <h3 class="title is-4">III-D. Evaluation Setup</h3>
           <div class="content has-text-justified">
@@ -575,7 +614,6 @@
           <ol>
             <li>Mizrahi et al. "4M: Massively Multimodal Masked Modeling." arXiv:2312.06647, 2023.</li>
             <li>Kirillov et al. "Segment Anything." arXiv:2304.02643, 2023.</li>
-            <li>Yamagiwa et al. "Zero-Shot Edge Detection with SCESAME." WACV Workshop, 2023.</li>
             <li>Heusel et al. "GANs Trained by a Two Time-Scale Update Rule." arXiv:1706.08500, 2018.</li>
             <li>Canny, J. "A Computational Approach to Edge Detection." IEEE TPAMI, 1987.</li>
             <li>Johnson et al. "CLEVR." arXiv:1612.06890, 2016.</li>
