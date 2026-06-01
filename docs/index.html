@@ -527,7 +527,7 @@
         <p>
           We generated 5,000 RGB images per conditioning modality and measured FID against the CLEVR test set. 
           Depth and normal give the best results (FID 35.15 and 34.26). Canny edges are surprisingly competitive (50.59), 
-          while scene description struggles (113.33) — text simply lacks the spatial detail needed for accurate generation.
+          while scene description struggles (113.33) - text simply lacks the spatial detail needed for accurate generation.
         </p>
         <p>
           Adding Canny as an intermediate step (modality → Canny → RGB) does not help: it slightly hurts quality 
@@ -537,7 +537,7 @@
         <p>
           We also tested spatial coherence by feeding synthetic Canny inputs (shapes moving and scaling across the canvas) 
           to the model. Generations follow the motion correctly, but the model consistently interprets both squares and circles 
-          as cylinders, and produces empty backgrounds when objects are placed near the image borders — 
+          as cylinders, and produces empty backgrounds when objects are placed near the image borders - 
           likely a result of the CLEVR dataset always placing objects in the center.
         </p>
         <br>
@@ -618,8 +618,20 @@
         <h2 class="title is-3">V. Conclusion</h2>
         <div class="content has-text-justified">
           <p>
-            Summarize your findings and contributions here. Discuss limitations and
-            potential directions for future work.
+            We successfully added Canny edges as a fifth modality to nano4M. The model can now generate to and from 
+            edge maps, and use them as an intermediate step between modalities. With a FID of 50.59, Canny edges 
+            are a reasonable conditioning signal - not far behind depth and normals. Generated RGB images also 
+            stay spatially consistent with their edge map inputs.
+          </p>
+          <p>
+            Our main hypothesis did not quite work out: chaining Canny edges between scene description and RGB 
+            only improved FID by ~2 points. Text descriptions don't carry enough spatial information for 
+            edge maps to bridge the gap. We also noticed the model tends to generate cylinders regardless of the 
+            input shape, and produces empty backgrounds when objects are near the image borders - 
+            probably because CLEVR always places objects in the center.
+          </p>
+          <p>
+            Future work could look at more diverse training data, or richer intermediate modalities like segmentation maps.
           </p>
         </div>
       </div>
